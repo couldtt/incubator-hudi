@@ -28,6 +28,7 @@ import org.apache.hudi.config.HoodieWriteConfig;
 import org.apache.hudi.utilities.UtilitiesTestBase;
 import org.apache.hudi.utilities.schema.FilebasedSchemaProvider;
 
+
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.spark.api.java.JavaRDD;
@@ -36,7 +37,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.HashSet;
 import java.util.List;
 
@@ -53,15 +53,15 @@ public class TestDFSHoodieDatasetInputReader extends UtilitiesTestBase {
   }
 
   @AfterClass
-  public static void cleanupClass() throws Exception {
+  public static void cleanupClass() {
     UtilitiesTestBase.cleanupClass();
   }
 
   @Before
   public void setup() throws Exception {
     super.setup();
-    schemaProvider = new FilebasedSchemaProvider(Helpers.setupSchemaOnDFS("hudi-test-suite-config/complex-source.avsc"),
-        jsc);
+    schemaProvider = new FilebasedSchemaProvider(
+        Helpers.setupSchemaOnDFS("hudi-test-suite-config", "complex-source.avsc"), jsc);
     HoodieTestUtils.init(jsc.hadoopConfiguration(), dfsBasePath);
   }
 
